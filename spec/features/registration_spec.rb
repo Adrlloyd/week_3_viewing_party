@@ -24,7 +24,45 @@ RSpec.describe "User Registration" do
     click_button 'Create New User'
 
     expect(current_path).to eq(register_path)
-    expect(page).to have_content("Email has already been taken")
-    
+    expect(page).to have_content("Email has already been taken")    
+  end
+
+  it 'redircts back to register if name blank with error message' do
+    visit register_path
+
+    fill_in :user_name, with: ''
+    fill_in :user_email, with:'user1@example.com'
+    fill_in :user_password, with: "test123"
+    fill_in :user_password_confirmation, with: "test123"
+    click_button 'Create New User'
+
+    expect(current_path).to eq(register_path)
+    expect(page).to have_content("Name can't be blank")
+  end
+
+  it 'redircts back to register if email blank with error message' do
+    visit register_path
+
+    fill_in :user_name, with: 'User One'
+    fill_in :user_email, with:''
+    fill_in :user_password, with: "test123"
+    fill_in :user_password_confirmation, with: "test123"
+    click_button 'Create New User'
+
+    expect(current_path).to eq(register_path)
+    expect(page).to have_content("Email can't be blank")
+  end
+
+  it 'redircts back to register if email blank with error message' do
+    visit register_path
+
+    fill_in :user_name, with: 'User One'
+    fill_in :user_email, with:'user1@example.com'
+    fill_in :user_password, with: "test123"
+    fill_in :user_password_confirmation, with: ""
+    click_button 'Create New User'
+
+    expect(current_path).to eq(register_path)
+    expect(page).to have_content("Password confirmation doesn't match Password")
   end
 end
