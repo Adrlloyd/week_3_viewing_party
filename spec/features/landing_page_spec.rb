@@ -25,7 +25,6 @@ RSpec.describe 'Landing Page' do
     it 'lists out existing users' do 
         user1 = User.create(name: "User One", email: "user1@test.com", password: "test123")
         user2 = User.create(name: "User Two", email: "user2@test.com", password: "test123")
-
         expect(page).to have_content('Existing Users:')
 
         within('.existing-users') do 
@@ -33,5 +32,11 @@ RSpec.describe 'Landing Page' do
             expect(page).to have_content(user2.email)
         end     
 
+    end
+
+    it 'has links/buttons that link to correct pages' do 
+        click_button "Log In"
+        
+        expect(current_path).to eq(login_path) 
     end 
 end
