@@ -1,4 +1,6 @@
 class UsersController <ApplicationController 
+    before_action :check_user, only: [:show]
+
     def new 
         @user = User.new()
     end 
@@ -43,5 +45,12 @@ class UsersController <ApplicationController
 
     def user_params 
         params.require(:user).permit(:name, :email, :password, :password_confirmation)
-    end 
+    end
+
+    def check_user
+        unless current_user
+          flash[:error] = "Login required"
+          redirect_to root_path
+        end
+    end
 end 
