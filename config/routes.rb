@@ -7,9 +7,11 @@ Rails.application.routes.draw do
   post '/logout', to: 'users#logout_user'
 
   get '/register', to: 'users#new'
-  get '/users/:id/movies', to: 'movies#index', as: 'movies'
-  get '/users/:user_id/movies/:id', to: 'movies#show', as: 'movie'
+  get '/dashboard', to: 'users#show', as: 'user'
+  get '/dashboard/movies', to: 'movies#index', as: 'movies'
+  get '/dashboard/movies/:id', to: 'movies#show', as: 'movie'
 
-  resources :users, only: [:show, :create]
+ 
+  resources :users, only: [:create]
   resources :viewing_parties, only: [:new]
 end
